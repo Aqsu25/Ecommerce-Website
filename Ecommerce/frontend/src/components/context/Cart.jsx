@@ -38,7 +38,6 @@ export const CartProvider = ({ children }) => {
         const token = UserToken();
         if (!token) {
           setShippingCost(0);
-          toast.warning("User not authenticated. Shipping set to 0.");
           return;
         }
         const res = await fetch(`${apiUrl}/customer-shipping`, {
@@ -126,9 +125,9 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartData,
+        shippingCost,
         addToCart,
         shipping,
-        shippingCost,
         updateCartqty,
         subTotal,
         grandTotal,

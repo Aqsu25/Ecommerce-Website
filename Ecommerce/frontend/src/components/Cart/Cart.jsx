@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../common/Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "../context/Cart";
+import { apiUrl, UserToken } from "../common/Http";
+import { toast } from "react-toastify";
 
 function Cart() {
+  
   const {
     cartData,
     shipping,
@@ -15,7 +18,8 @@ function Cart() {
     removeItem,
   } = useContext(CartContext);
 
-  const isEmpty = !cartData || cartData.length === 0;
+  const isEmpty = cartData.length === 0;
+
 
   return (
     <Layout>

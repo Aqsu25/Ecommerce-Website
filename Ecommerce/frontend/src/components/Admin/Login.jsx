@@ -33,32 +33,42 @@ function Login() {
       const result = await response.json();
 
       console.log("API Result:", result);
-
+      // 
       if (result.status === 200) {
-        const adminInfo = {
+
+        const userData = {
           token: result.token,
           name: result.user.name,
           role: result.role,
-          remember: data.remember || false,
         };
 
-        if (data.remember) {
-          localStorage.setItem("adminInfo", JSON.stringify(adminInfo));
-        } else {
-          sessionStorage.setItem("adminInfo", JSON.stringify(adminInfo));
-        }
-
-        login(adminInfo);
-
         if (result.role === "admin") {
+
+          if (data.remember) {
+            localStorage.setItem("adminInfo", JSON.stringify(userData));
+          } else {
+            sessionStorage.setItem("adminInfo", JSON.stringify(userData));
+          }
+
+          login(userData);
           navigate("/admin/dashboard");
-          toast.success("Login Successful!");
+          toast.success("Admin Login Successful!");
+
         } else {
+
+          if (data.remember) {
+            localStorage.setItem("userInfo", JSON.stringify(userData));
+          } else {
+            sessionStorage.setItem("userInfo", JSON.stringify(userData));
+          }
+
+          login(userData);
           navigate("/user/dashboard");
+          toast.success("User Login Successful!");
         }
-      } else {
-        toast.error(result.message || "Login Failed");
+
       }
+
     } catch (error) {
       console.error("Login Error:", error);
       toast.error("Something went wrong!");

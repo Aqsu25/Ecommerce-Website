@@ -43,10 +43,7 @@ function Product() {
                 console.log(result)
                 setProduct(result.data);
 
-                console.log("Url-IMG", result.data.image_url)
-
                 setProductImages(result.data.product_images)
-                console.log("PRODUCT-IMG", result.data.product_images)
 
                 setProductSizes(result.data.product_sizes)
             }
