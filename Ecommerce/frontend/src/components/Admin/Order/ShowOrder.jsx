@@ -50,10 +50,7 @@ function ShowOrder() {
                 <div className='md:container md:mx-auto px-6 py-5 my-5'>
                     <div className='flex justify-between my-4'>
                         <h2 className='my-2 text-base md:text-2xl'>Orders</h2>
-                        <Link to="/admin/orders/create" className="bg-white text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow
-                    hover:bg-[#007595] hover:text-white">
-                            Create
-                        </Link>
+                       
                     </div>
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="w-full md:w-1/4">
@@ -158,16 +155,17 @@ function ShowOrder() {
                                     }
                                 </div>
 
-                            </div>
-                            <div className='flex justify-end items-end'>
-                                {orders?.data && (
+                            </div>{
+                                orders.length === 0 &&
+                                <div className='flex justify-end items-end'>
                                     <Pagination
                                         currentPage={orders.current_page}
                                         lastPage={orders.last_page}
                                         onPageChange={(page) => setCurrentPage(page)}
                                     />
-                                )}
-                            </div>
+                                </div>
+                            }
+                           
                         </div>
                     </div>
                 </div>

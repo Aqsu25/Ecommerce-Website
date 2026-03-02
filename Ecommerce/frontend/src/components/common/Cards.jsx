@@ -2,45 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiUrl } from './Http';
 import striptags from "striptags";
-import { CartContext } from '../context/Cart';
 
 
 
 function Cards() {
     const [newProducts, setNewProduct] = useState([]);
-    const { addToCart } = useContext(CartContext);
-
-    // const newArrival = [
-    //     {
-    //         id: 1,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Apple AirPods",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     },
-    //     {
-    //         id: 2,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Bags",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     },
-    //     {
-    //         id: 3,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Women Cloth",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     },
-    //     {
-    //         id: 4,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Women Cloth",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     }
-    // ]
-
+ 
 
     // newarrivals
     const newArrivals = async () => {
@@ -54,8 +21,7 @@ function Cards() {
             });
             const result = await res.json();
             if (result.status === 200)
-                console.log(result);
-            setNewProduct(result.data);
+                setNewProduct(result.data);
         } catch (error) {
             console.error("Fetch error:", error);
             toast.error("Something Went Wrong!");
@@ -68,18 +34,6 @@ function Cards() {
 
     }, []);
 
-    // const handleCart = () => {
-    //     if (productSizes.length > 0 && !sizeSelected) {
-    //         toast.error("Please Select Size !");
-    //         return;
-    //     }
-    //     else {
-    //         const selectedSize = productSizes.length > 0 ? sizeSelected : null;
-    //         addToCart(product, selectedSize);
-    //         toast.success("Product Successfully Add To Cart!");
-    //     }
-
-    // }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {newProducts.map((newproduct) => (
@@ -111,13 +65,6 @@ function Cards() {
                             {striptags(newproduct.description)}
                         </p>
 
-                        <button
-                            // onClick={() => handleCart()}
-                            className="rounded-md w-full mt-6 bg-cyan-600 py-2 px-4 text-white text-sm hover:bg-cyan-700 transition"
-                            type="button"
-                        >
-                            Add to Cart
-                        </button>
                     </div>
                 </div>
             ))}

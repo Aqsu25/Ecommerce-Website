@@ -226,14 +226,6 @@ function Shop() {
                     <p className="text-slate-600 text-sm leading-normal font-light">
                       {striptags(product.description)}
                     </p>
-
-
-                    <button
-                      className="rounded-md w-full mt-6 bg-cyan-600 py-2 px-4 text-white text-sm hover:bg-cyan-700 transition"
-                      type="button"
-                    >
-                      Add to Cart
-                    </button>
                   </div>
                 </div>
               ))}

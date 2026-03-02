@@ -8,8 +8,8 @@ function Sidebar() {
     const sideBarLinks = [
         { name: "Dashboard", path: "/admin/dashboard" },
        
+        { name: "Categories", path: "/admin/categories" },
         { name: "Brands", path: "/admin/brands" },
-        { name: "Category", path: "/admin/categories" },
         { name: "Sizes", path: "/admin/sizes" },
         { name: "Products", path: "/products" },
         { name: "Shipping", path: "/admin/shipping" },

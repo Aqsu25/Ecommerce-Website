@@ -12,7 +12,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { apiUrl } from '../common/Http';
 import { toast } from 'react-toastify';
 import { CartContext } from '../context/Cart';
-
+import striptags from "striptags";
 
 function Product() {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -20,7 +20,11 @@ function Product() {
     const [productImages, setProductImages] = useState([]);
     const [productSizes, setProductSizes] = useState([]);
     const [sizeSelected, setSizeSelected] = useState(null);
+    const [activeTab, setActiveTab] = useState("");
     const { addToCart } = useContext(CartContext);
+
+
+
 
 
     const { id } = useParams();
@@ -37,10 +41,13 @@ function Product() {
             const result = await res.json();
             if (result.status === 200) {
                 console.log(result)
-                console.log(result.data.product_images)
-                console.log(result.data.product_images)
                 setProduct(result.data);
+
+                console.log("Url-IMG", result.data.image_url)
+
                 setProductImages(result.data.product_images)
+                console.log("PRODUCT-IMG", result.data.product_images)
+
                 setProductSizes(result.data.product_sizes)
             }
 
@@ -112,7 +119,7 @@ function Product() {
                                         productImages.map((img, index) => (
                                             <SwiperSlide key={index}>
                                                 <img
-                                                    src={img.image}
+                                                    src={img?.image_url}
                                                     alt="Img-single"
                                                     className="w-full h-[420px] object-cover rounded-xl"
                                                 />
@@ -136,7 +143,7 @@ function Product() {
                                         productImages.map((img, index) => (
                                             <SwiperSlide key={index}>
                                                 <img
-                                                    src={img.product_images}
+                                                    src={img?.image_url}
                                                     alt="Img-pro"
                                                     className="h-24 w-full object-cover rounded-lg border hover:border-[#007595] transition"
                                                 />
@@ -200,14 +207,48 @@ function Product() {
                 </div>
                 <div className='mt-8'>
                     <ul className="flex border-b border-gray-500 mt-5">
+
                         <li className="-mb-px mr-1">
-                            <Link className="bg-white inline-block border-l border-t hover:text-red-500 border-r rounded-t py-2 px-4 text-[#007595] font-semibold" to="#">Description</Link>
+                            <button
+                                onClick={() => setActiveTab("description")}
+                                className={`inline-block py-2 px-4 font-semibold ${activeTab === "description"
+                                    ? "border-b-2 border-[#007595] text-[#007595]"
+                                    : "text-gray-600"
+                                    }`}
+                            >
+                                Description
+                            </button>
                         </li>
+
                         <li className="mr-1">
-                            <Link className
-                                ="bg-white inline-block py-2 px-4 text-[#007595] hover:text-red-500 font-semibold" to="#">Reviews (10)</Link>
+                            <button
+                                onClick={() => setActiveTab("reviews")}
+                                className={`inline-block py-2 px-4 font-semibold ${activeTab === "reviews"
+                                    ? "border-b-2 border-[#007595] text-[#007595]"
+                                    : "text-gray-600"
+                                    }`}
+                            >
+                                Reviews (10)
+                            </button>
                         </li>
+
                     </ul>
+
+
+                    <div className="mt-4">
+                        {activeTab === "description" && (
+                            <div>
+
+                                {striptags(product?.description)}
+                            </div>
+                        )}
+
+                        {activeTab === "reviews" && (
+                            <div>
+                                <p>Reviews section yahan show hoga.</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </Layout>)

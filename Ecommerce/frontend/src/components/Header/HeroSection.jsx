@@ -6,9 +6,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 function HeroSection() {
     const images = [
-        "https://images.pexels.com/photos/6207749/pexels-photo-6207749.jpeg",
-        "https://images.pexels.com/photos/34577/pexels-photo.jpg",
-        "https://images.pexels.com/photos/6956903/pexels-photo-6956903.jpeg",
+        
+        "https://images.pexels.com/photos/1050312/pexels-photo-1050312.jpeg",
+        "https://images.pexels.com/photos/1413420/pexels-photo-1413420.jpeg",
+        "https://images.pexels.com/photos/2220253/pexels-photo-2220253.jpeg",
     ]
     return (
         <div className="w-full">

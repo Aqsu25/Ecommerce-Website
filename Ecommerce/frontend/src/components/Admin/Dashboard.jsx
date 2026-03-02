@@ -29,21 +29,21 @@ function Dashboard() {
                                 <div className='shadow-lg rounded-lg border-2 border-gray-200'>
                                     <div className='p-4 text-sm md:text-2xl'>
                                         <span >1</span>
-                                        <h2 >Orders</h2>
+                                        <h2 >Products</h2>
 
                                     </div>
-                                    <div className='bg-gray-100 text-center py-2 border-t border-gray-300'>
-                                        <Link to="">View Orders</Link>
+                                    <div className='bg-gray-100 py-2 text-center border-t border-gray-300'>
+                                        <Link to="/products">View Products</Link>
                                     </div>
                                 </div>
                                 <div className='shadow-lg rounded-lg border-2 border-gray-200'>
                                     <div className='p-4 text-sm md:text-2xl'>
                                         <span >1</span>
-                                        <h2 >Products</h2>
+                                        <h2 >Orders</h2>
 
                                     </div>
-                                    <div className='bg-gray-100 py-2 text-center border-t border-gray-300'>
-                                        <Link to="">View Products</Link>
+                                    <div className='bg-gray-100 text-center py-2 border-t border-gray-300'>
+                                        <Link to="/admin/orders">View Orders</Link>
                                     </div>
                                 </div>
 

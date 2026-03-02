@@ -50,10 +50,9 @@ function Login() {
 
         login(adminInfo);
 
-        toast.success("Login Successful!");
-
         if (result.role === "admin") {
           navigate("/admin/dashboard");
+          toast.success("Login Successful!");
         } else {
           navigate("/user/dashboard");
         }
@@ -73,85 +72,76 @@ function Login() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 px-4">
         <form
           onSubmit={handleSubmit(onHandleSubmit)}
-          className="w-full max-w-md bg-white p-4 rounded-2xl shadow-xl"
+          className="w-full max-w-md bg-gray-50 p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:shadow-2xl"
         >
-          <div className="text-center text-[#007595] text-3xl font-bold mb-6">
-            Login
+          <h2 className="text-3xl font-bold text-center text-[#007595] mb-8 animate-fadeIn">
+            Login Account
+          </h2>
+          {/* Email */}
+          <div className="mb-5">
+            <label className="block mb-2 text-sm text-slate-600">
+              Email
+            </label>
+            <input
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              type="email"
+              className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              placeholder="Enter your email"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
-          <div className="flex flex-col gap-4">
-            <div>
-              <label className="block text-sm mb-2 text-slate-600">Email</label>
+          {/* Password */}
+          <div className="mb-5">
+            <label className="block mb-2 text-sm text-slate-600">
+              Password
+            </label>
+            <input
 
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full rounded-md px-3 py-2 focus:outline-none focus:border-[#007595]"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
-                })}
-              />
 
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
-            </div>
+              {...register("password", {
+                required: "Password is required",
+              })}
+              type="password"
+              className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+              placeholder="Enter password"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#007595] text-white py-2 rounded-lg font-semibold transition-all duration-300 
+            hover:bg-slate-900 hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+          >
+            {loading ? "Logging in..." : "Sign In"}
+          </button>
 
-            <div>
-              <label className="block text-sm mb-2 text-slate-600">
-                Password
-              </label>
+          <p className="text-center text-sm mt-6">
+            Don&apos;t have an account?{" "}
 
-              <input
-                type="password"
-                placeholder="Your Password"
-                className="w-full rounded-md px-3 py-2 focus:outline-none focus:border-[#007595]"
-                {...register("password", {
-                  required: "Password is required",
-                })}
-              />
-
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                {...register("remember")}
-                className="w-4 h-4"
-                id="remember"
-              />
-              <label htmlFor="remember" className="text-sm text-slate-600">
-                Remember Me
-              </label>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#007595] text-white py-2 rounded-md hover:bg-black transition duration-300 disabled:opacity-50"
+            <Link
+              to="/register"
+              className="text-[#007595] font-semibold hover:underline"
             >
-              {loading ? "Logging in..." : "Sign In"}
-            </button>
-
-            <p className="text-sm text-center text-slate-600">
-              Don&apos;t have an account?{" "}
-              <Link
-                to="#signup"
-                className="text-[#007595] underline font-semibold"
-              >
-                Sign up
-              </Link>
-            </p>
-          </div>
+              Sign up
+            </Link>
+          </p>
         </form>
       </div>
     </Layout>

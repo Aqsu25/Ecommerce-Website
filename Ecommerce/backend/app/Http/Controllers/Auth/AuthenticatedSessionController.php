@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             'token' => $token,
             'token_type' => 'Bearer',
             'status' => 200,
-            'role' => $user->getRoleNames(),
+            'role' => $user->getRoleNames()->first(),
             'user' => $user
         ]);
     }

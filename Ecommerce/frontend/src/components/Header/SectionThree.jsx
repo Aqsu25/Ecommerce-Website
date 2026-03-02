@@ -5,29 +5,6 @@ import striptags from "striptags";
 
 
 function SectionThree() {
-    //   const featuredProduct = [
-    //     {
-    //         id: 1,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Apple AirPods",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     },
-    //     {
-    //         id: 2,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Bags",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     },
-    //     {
-    //         id: 3,
-    //         img: "https://images.unsplash.com/photo-1629367494173-c78a56567877?auto=format&fit=crop&w=927&q=80",
-    //         title: "Women Cloth",
-    //         rupees: "95.00",
-    //         description: "With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case"
-    //     }
-    // ]
 
     const [newfeatures, setFeatures] = useState([]);
 
@@ -43,8 +20,7 @@ function SectionThree() {
             });
             const result = await res.json();
             if (result.status === 200)
-                console.log(result);
-            setFeatures(result.data);
+                setFeatures(result.data);
         } catch (error) {
             console.error("Fetch error:", error);
             toast.error("Something Went Wrong!");
@@ -92,13 +68,7 @@ function SectionThree() {
                             <p className="text-slate-600 text-sm leading-normal font-light">
                                 {striptags(featuredProduct.description)}
                             </p>
-
-                            <button
-                                className="rounded-md w-full mt-6 bg-cyan-600 py-2 px-4 text-white text-sm hover:bg-cyan-700 transition"
-                                type="button"
-                            >
-                                Add to Cart
-                            </button>
+                           
                         </div>
                     </div>
                 ))}

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from "/assets/jewellry.png";
+import aura from "/assets/aura.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { AdminAuthContext } from "../context/AdminAuth";
@@ -23,15 +23,22 @@ function Navbar() {
     <>
       <div className="w-full bg-[#007595] h-14 sm:h-16 flex items-center justify-center">
         <h1 className="text-xl sm:text-2xl font-bold text-white">
-          Ecommerce Store
+          Handcrafted Jewelry
         </h1>
       </div>
 
       <nav className="sticky top-0 z-50 bg-gray-50 shadow-md">
         <div className="flex items-center justify-between px-6 md:px-16 py-4">
+
+
+
           <NavLink to="/">
-            <img src={logo} alt="logo" className="w-20 rounded-full" />
+            <img src={aura} alt="logo" className="w-20 rounded-full" />
           </NavLink>
+
+          {/* <NavLink to="/">
+            <img src={artisan} alt="logo" className="w-20 rounded-full" />
+          </NavLink> */}
 
           <div className="hidden sm:flex gap-8 items-center">
             <NavLink
@@ -81,14 +88,14 @@ function Navbar() {
             {!isLoggedIn ? (
               <Link
                 to="/login"
-                className="px-4 py-2 rounded-full bg-[#007595] text-white"
+                className="px-4 py-2 rounded-full bg-[#007595] text-white hover:bg-slate-900 hover:scale-[1.02]"
               >
                 Login
               </Link>
             ) : (
               <button
                 onClick={handleLogout}
-                className="cursor-pointer px-6 py-2 rounded-full bg-[#007595] text-white"
+                className="cursor-pointer px-6 py-2 rounded-full bg-[#007595] text-white hover:bg-slate-900 hover:scale-[1.02]"
               >
                 Logout
               </button>

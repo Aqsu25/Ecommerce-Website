@@ -66,7 +66,7 @@ function Shipping() {
                 reset({
                     shipping_charge: result.data.shipping_charge,
                 })
-                toast.success(result.message)
+               
 
             } else {
                 console.log("Something went wrong!")

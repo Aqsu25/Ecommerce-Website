@@ -28,7 +28,7 @@ function CreateSize() {
         console.log("API Show Result:", result.data);
         if (result.status == 200) {
             toast.success(result.message)
-            navigate('/admin/brands')
+            navigate('/admin/sizes')
 
         } else {
             console.log("Something went wrong!")

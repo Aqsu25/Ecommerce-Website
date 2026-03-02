@@ -19,7 +19,6 @@ import ProductCreate from "./components/Admin/Product/ProductCreate";
 import ProductShow from "./components/Admin/Product/ProductShow";
 import ProductEdit from "./components/Admin/Product/ProductEdit";
 import Register from "./components/Register";
-import UserLogin from "./components/UserLogin";
 import { Userrequireauth } from "./components/User/Userrequireauth";
 import UserDashboard from "./components/User/UserDashboard";
 import OrderConfirmation from "./components/User/OrderConfirmation";

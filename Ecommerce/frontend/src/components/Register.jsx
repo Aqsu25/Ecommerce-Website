@@ -55,7 +55,7 @@ function Register() {
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 px-4">
                 <form
                     onSubmit={handleSubmit(onHandleSubmit)}
-                    className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:shadow-2xl"
+                    className="w-full max-w-md bg-gray-50 p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:shadow-2xl"
                 >
                     <h2 className="text-3xl font-bold text-center text-[#007595] mb-8 animate-fadeIn">
                         Create Account
