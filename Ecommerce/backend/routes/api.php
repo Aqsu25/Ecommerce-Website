@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\ShippingChargeController;
 use App\Http\Controllers\admin\SizeController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -14,6 +15,9 @@ use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\ProducController;
 use App\Http\Controllers\Front\ShippingController;
 use App\Http\Controllers\TempController;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
@@ -111,5 +115,26 @@ Route::group(
 
         //  save shipping cost
         Route::put('/admin/saveCharge', [ShippingChargeController::class, 'getUpdate']);
+
+        // users
+        Route::resource('/admin/users', UserController::class);
+
+        // COUNTS
+        Route::get('/dashboard-count', function () {
+
+            $users = \App\Models\User::count();
+            $products = \App\Models\Product::count();
+            $orders = \App\Models\Order::count();
+
+            return response()->json([
+                'status' => 200,
+                'users' => $users,
+                'products' => $products,
+                'orders' => $orders,
+            ]);
+        });
     }
+
+
+
 );

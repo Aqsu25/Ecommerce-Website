@@ -8,7 +8,7 @@ function Sidebar() {
             { name: "My Account", path: "/myaccount" },
             { name: "Products", path: "" },
             { name: "Orders", path: "/myorder" },
-            { name: "Change Password", path: "" },
+          
         ]
   return (
       <div className='shadow-lg p-4 rounded-lg border-2 border-gray-200'>

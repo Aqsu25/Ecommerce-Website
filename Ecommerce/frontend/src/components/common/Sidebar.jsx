@@ -14,8 +14,8 @@ function Sidebar() {
         { name: "Products", path: "/products" },
         { name: "Shipping", path: "/admin/shipping" },
         { name: "Orders", path: "/admin/orders" },
-        { name: "Users", path: "/users" },
-        { name: "Change Password", path: "change/password" },
+        { name: "Users", path: "/admin/users" },
+      
     ]
     return (
         <div className='shadow-lg p-4 rounded-lg border-2 border-gray-200'>

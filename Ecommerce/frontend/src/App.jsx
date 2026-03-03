@@ -31,6 +31,7 @@ import Profile from "./components/User/Profile";
 import CreateSize from "./components/Admin/Sizes/CreateSize";
 import ShowSize from "./components/Admin/Sizes/ShowSize";
 import EditSize from "./components/Admin/Sizes/EditSize";
+import ShowUser from "./components/Admin/User/ShowUser";
 
 function App() {
   return (
@@ -246,6 +247,16 @@ function App() {
               </Adminrequireauth>
             }
           />
+          {/* users */}
+          <Route
+            path="/admin/users"
+            element={
+              <Adminrequireauth>
+                <ShowUser />
+              </Adminrequireauth>
+            }
+          />
+
         </Routes>
       </BrowserRouter>
       <ToastContainer />
