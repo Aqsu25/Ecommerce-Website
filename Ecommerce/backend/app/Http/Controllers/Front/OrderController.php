@@ -46,10 +46,7 @@ class OrderController extends Controller
             'grand_total' => 'required|numeric|min:0',
             'payment_status' => ['required', Rule::in(['paid', 'not paid'])],
             'status' => ['required', Rule::in(['pending', 'delivered', 'shipped', 'cancelled'])],
-            'phone_num' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
+          
         ]);
 
         if ($validator->fails()) {
@@ -67,10 +64,7 @@ class OrderController extends Controller
             'discount' => $request->discount,
             'payment_status' => $request->payment_status,
             'status' => $request->status,
-            'phone_num' => $request->phone_num,
-            'city' => $request->city,
-            'state' => $request->state,
-            'zip' => $request->zip,
+           
         ]);
 
         foreach ($request->cart as $item) {
@@ -97,7 +91,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::with(['items.product', 'user'])->findOrFail($id);
+        $order = Order::with(['items.product', 'user'])->where('user_id',Auth::id())->findOrFail($id);
 
         if (!$order) {
             return response()->json([

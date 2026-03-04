@@ -13,7 +13,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['items', 'user'])->orderBy('created_at', 'ASC')->paginate(5);
+        $orders = Order::with(['items', 'user.profile'])->orderBy('created_at', 'ASC')->paginate(5);
 
         return response()->json([
             'status' => 200,
@@ -42,7 +42,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::with(['items', 'items.product', 'user'])->findOrFail($id);
+        $order = Order::with(['items', 'items.product', 'user.profile'])->findOrFail($id);
 
         if (!$order) {
             return response()->json([

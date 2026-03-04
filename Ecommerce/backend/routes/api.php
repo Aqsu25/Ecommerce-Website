@@ -14,10 +14,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\ProducController;
 use App\Http\Controllers\Front\ShippingController;
+use App\Http\Controllers\front\UserController as FrontUserController;
 use App\Http\Controllers\TempController;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Route::post('/admin/login', [AuthenticatedSessionController::class, 'store']);
@@ -59,6 +57,18 @@ Route::group([
 
     // shipping
     Route::get('/customer-shipping', [ShippingController::class, 'getShippedUser']);
+
+    // comment
+    //  Route::resource('/comment',FrontUserController::class);
+
+    Route::post('/comment/{productId}', [FrontUserController::class, 'store']);
+
+    Route::get('/comment/{productId}', [FrontUserController::class, 'index']);
+
+    Route::delete('/comment/{productId}', [FrontUserController::class, 'destroy']);
+
+
+
     // user
     Route::get('/getUser', function (Request $request) {
 

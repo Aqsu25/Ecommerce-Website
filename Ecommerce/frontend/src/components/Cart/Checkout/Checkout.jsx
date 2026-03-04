@@ -6,7 +6,7 @@ import { CartContext } from '../../context/Cart'
 import { useForm } from 'react-hook-form'
 import { apiUrl, UserToken } from '../../common/Http'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 function Checkout() {
 
@@ -19,6 +19,7 @@ function Checkout() {
 
     } = useContext(CartContext);
     const navigate = useNavigate();
+    const {id}=useParams();
     const [paymentMethod, setPaymentMethod] = useState(`cod`);
     // handlepayment
     const handlePayment = (e) => {
@@ -105,7 +106,7 @@ function Checkout() {
             status: 'pending',
             cart: cartData
         }
-        const res = await fetch(`${apiUrl}/orders`, {
+        const res = await fetch(`${apiUrl}/order`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -122,7 +123,8 @@ function Checkout() {
 
         if (result.status == 200) {
             localStorage.removeItem('cart')
-            navigate("/order-confirmation", {
+            navigate(`/order/confirmation/${id}`
+                , {
                 state: {
                     order: result.data,
                     orderItems: cartData,

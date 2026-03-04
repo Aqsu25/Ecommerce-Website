@@ -3,12 +3,13 @@ import Sample from "../../common/Sample";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../common/Loader";
-import { apiUrl, adminToken } from "../../common/Http";
+import { apiUrl, adminToken} from "../../common/Http";
 import { useForm } from "react-hook-form";
 
 function OrderDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
+   const [profile, setProfile] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate=useNavigate();
@@ -66,7 +67,9 @@ function OrderDetail() {
         setLoading(false);
       }
     };
+
     fetchOrder();
+
   }, [id]);
 
   if (loading) return <Loader />;
@@ -146,14 +149,19 @@ function OrderDetail() {
                 <h3 className="font-semibold text-gray-700">Customer</h3>
                 <p className="text-gray-600">{order.user?.name}</p>
                 <p className="text-gray-600">{order.user?.email}</p>
-                <p className="text-gray-600">{order.phone_num}</p>
+                <p className="text-gray-600">{order.user?.profile?.phone_num}</p>
               </div>
 
 
               <div className="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
                 <h3 className="font-semibold text-gray-700">Shipping</h3>
-                <p className="text-gray-600">{order.city}, {order.state}</p>
-                <p className="text-gray-600">ZIP: {order.zip}</p>
+                <p className="text-gray-600">
+                  {order.user?.profile?.city}, {order.user?.profile?.state}
+                  </p>
+                <p className="text-gray-600">ZIP: 
+                  {order.user?.profile?.zip}
+
+                </p>
               </div>
 
 

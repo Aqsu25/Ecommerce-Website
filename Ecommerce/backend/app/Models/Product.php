@@ -46,4 +46,10 @@ class Product extends Model
     {
         return $this->belongsTo(OrderItem::class);
     }
+
+     // comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -73,6 +73,18 @@ function Navbar() {
             >
               Contact
             </NavLink>
+            {/* dashboard */}
+            <NavLink
+              to={!adminLogin ? "/user/dashboard" : "/admin/dashboard"}
+              className={({ isActive }) =>
+                `transition-all duration-300 ${isActive
+                  ? "text-[#007595] font-semibold border-b-2 border-[#007595]"
+                  : "text-gray-700 hover:text-[#007595]"
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
             <NavLink
               to="/cart"
               className={({ isActive }) =>
@@ -99,6 +111,8 @@ function Navbar() {
               )}
             </NavLink>
 
+
+            {/*  */}
             {!isLoggedIn ? (
               <Link
                 to="/login"
@@ -131,6 +145,12 @@ function Navbar() {
             </NavLink>
             <NavLink className="block py-2" to="/contact">
               Contact
+            </NavLink>
+            <NavLink
+              to={!adminLogin ? "/user/dashboard" : "/admin/dashboard"}
+              className="block py-2"
+            >
+              Dashboard
             </NavLink>
             <NavLink className="py-2 relative" to="/cart">
               <FontAwesomeIcon icon={faShoppingCart} size="1x" />

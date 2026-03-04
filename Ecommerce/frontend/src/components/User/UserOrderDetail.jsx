@@ -11,6 +11,7 @@ function UserOrderDetail() {
     const [order, setOrder] = useState(null);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [profile, setProfile] = useState(null);
 
 
     // fetch single id order
@@ -35,7 +36,33 @@ function UserOrderDetail() {
                 setLoading(false);
             }
         };
+
+        // fetchprofiledata
+        const fetchProfileData = async () => {
+            try {
+                const res = await fetch(`${apiUrl}/myaccount`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Accept": "application/json",
+                        Authorization: `Bearer ${UserToken()}`
+                    },
+                });
+
+                const result = await res.json();
+                console.log("API Response:", result);
+
+                if (result.status === 200 && result.data) {
+                    setProfile(result.data)
+                }
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+
+            }
+        };
         fetchOrder();
+        fetchProfileData();
     }, [id]);
 
     if (loading) return <Loader />;
@@ -64,8 +91,8 @@ function UserOrderDetail() {
 
                                 <div className="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
                                     <h3 className="font-semibold text-gray-700">Shipping</h3>
-                                    <p className="text-gray-600 text-sm">{order.city}, {order.state}</p>
-                                    <p className="text-gray-600 text-sm">ZIP: {order.zip}</p>
+                                    <p className="text-gray-600 text-sm">{profile?.city}, {profile?.state}</p>
+                                    <p className="text-gray-600 text-sm">{profile?.zip}</p>
                                 </div>
 
 
