@@ -47,9 +47,14 @@ class Product extends Model
         return $this->belongsTo(OrderItem::class);
     }
 
-     // comments
+    // comments
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    // ratings
+    public function ratings()
+    {
+        return $this->hasMany(Review::class);
     }
 }

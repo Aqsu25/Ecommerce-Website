@@ -68,4 +68,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+    // rating
+    public function ratings()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // likes
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 }

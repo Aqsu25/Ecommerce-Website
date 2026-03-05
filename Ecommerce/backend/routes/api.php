@@ -37,6 +37,8 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 // login
 // Route::post('/login', [RegisteredUserController::class, 'login']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+// comment
+Route::get('/comment/{productId}', [FrontUserController::class, 'index']);
 
 
 
@@ -49,6 +51,11 @@ Route::group([
 ], function () {
 
     Route::resource('/order', OrderController::class);
+    // productlike
+    Route::post('/product/{id}/like', [FrontUserController::class, 'toggleProductLike']);
+
+    // COMMENTlike
+    Route::post('/comment/{id}/like', [FrontUserController::class, 'toggleCommentLike']);
 
     // profile
     Route::post('/myaccount', [ProfileController::class, 'store']);
@@ -63,7 +70,6 @@ Route::group([
 
     Route::post('/comment/{productId}', [FrontUserController::class, 'store']);
 
-    Route::get('/comment/{productId}', [FrontUserController::class, 'index']);
 
     Route::delete('/comment/{productId}', [FrontUserController::class, 'destroy']);
 

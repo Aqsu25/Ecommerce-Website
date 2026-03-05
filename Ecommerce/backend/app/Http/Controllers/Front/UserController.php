@@ -4,6 +4,7 @@ namespace App\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -117,4 +118,83 @@ class UserController extends Controller
 
         ], 200);
     }
+
+    public function toggleProductLike($id)
+    {
+
+        $user = auth()->user();
+
+        $product = Product::findOrFail($id);
+
+        // existing
+        $like = Like::where('user_id', $user->id)
+            ->where('likeable_id', $product->id)
+            ->where('likeable_type', Product::class)
+            ->first();
+
+        if ($like) {
+            $like->delete();
+            $liked = 'false';
+            $message = "UnLike Successfully!";
+        } else {
+            Like::create([
+                'user_id' => auth()->id(),
+                'likeable_id' => $product->id,
+                'likeable_type' => Product::class,
+            ]);
+            $liked = 'true';
+            $message = "Like Successfully!";
+        }
+        // total likes
+        $totalLikes = Like::where('likeable_id', $product->id)
+            ->where('likeable_type', Product::class)
+            ->count();
+        return response()->json([
+            'status' => 200,
+            'liked' => $liked,
+            'totalLikes' => $totalLikes,
+            'message' => $message,
+
+        ], 200);
+    }
+
+    // commentLike
+    public function toggleCommentLike($id)
+    {
+        $user = auth()->user();
+
+        $comment = Comment::findOrFail($id);
+
+        // existing
+        $like = Like::where('user_id', $user->id)
+            ->where('likeable_id', $comment->id)
+            ->where('likeable_type', Comment::class)
+            ->first();
+
+        if ($like) {
+            $like->delete();
+            $liked = 'false';
+            $message = "UnLike Successfully!";
+        } else {
+            Like::create([
+                'user_id' => auth()->id(),
+                'likeable_id' => $comment->id,
+                'likeable_type' => Comment::class,
+            ]);
+            $liked = 'true';
+            $message = "Like Successfully!";
+        }
+        // total likes
+        $totalLikes = Like::where('likeable_id', $comment->id)
+            ->where('likeable_type', Comment::class)
+            ->count();
+        return response()->json([
+            'status' => 200,
+            'liked' => $liked,
+            'totalLikes' => $totalLikes,
+            'message' => $message,
+
+        ], 200);
+    }
 }
+// 
