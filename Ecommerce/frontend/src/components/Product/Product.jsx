@@ -39,8 +39,8 @@ function Product() {
     // LIKES
     const [likes, setLikes] = useState(() => {
 
-        const productLike = localStorage.setItem("productLikes",);
-        return productLike ? productLike : null;
+        const productLike = localStorage.gatItem("productLikes",);
+        return productLike ? JSON.parse(productLike) : false;
     }
     );
     // like count
