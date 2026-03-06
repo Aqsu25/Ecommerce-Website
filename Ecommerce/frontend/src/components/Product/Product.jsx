@@ -38,14 +38,9 @@ function Product() {
 
 
     // LIKES
-    const [likes, setLikes] = useState(() => {
-        const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
-        return storedLikes.hasOwnProperty(id)
-            ? storedLikes[id]
-            : false;
-    });
-    // like count
+    const [likes, setLikes] = useState(false);
     const [likesCount, setLikesCount] = useState(0);
+    // like count
 
 
     // time
@@ -109,7 +104,6 @@ function Product() {
             fetchComment();
         }
     }, [id]);
-
     useEffect(() => {
         const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
 
@@ -204,6 +198,7 @@ function Product() {
     // handleLikesproduct
     const handleLikes = async () => {
         try {
+
             const res = await fetch(`${apiUrl}/product/${id}/like`, {
                 method: "POST",
                 headers: {
@@ -219,32 +214,36 @@ function Product() {
                 const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
 
                 if (result.liked) {
-                    toast.success(result.message);
 
                     setLikes(true);
                     storedLikes[id] = true;
 
+                    toast.success(result.message);
+
                 } else {
-                    toast.info(result.message);
 
                     setLikes(false);
                     delete storedLikes[id];
+
+                    toast.info(result.message);
                 }
 
                 setLikesCount(result.totalLikes);
 
                 localStorage.setItem("productLikes", JSON.stringify(storedLikes));
+
             }
 
         } catch (error) {
-            console.error("Fetch error:", error);
-            toast.error("Something Went Wrong!");
+            console.error(error);
+            toast.error("Something went wrong!");
         }
     };
 
 
     // handleLikesComment
     const likeComment = async (commentId) => {
+
         try {
 
             const res = await fetch(`${apiUrl}/comment/${commentId}/like`, {
@@ -254,23 +253,32 @@ function Product() {
                     "Authorization": `Bearer ${UserToken()}`
                 },
             });
+
             const result = await res.json();
+
             if (result.status === 200) {
-                toast.success(result.message);
+
                 setComment(prev =>
                     prev.map(c =>
                         c.id === commentId
-                            ? { ...c, likes_count: result.totalLikes, liked: result.liked }
+                            ? {
+                                ...c,
+                                likes_count: result.totalLikes,
+                                liked: result.liked
+                            }
                             : c
                     )
                 );
 
+                toast.success(result.message);
+
             }
 
-
         } catch (error) {
-            console.error("Fetch error:", error);
-            toast.error("Something Went Wrong!");
+
+            console.error(error);
+            toast.error("Something went wrong!");
+
         }
     };
 
@@ -333,8 +341,9 @@ function Product() {
 
                                                     }
                                                 </button>
-                                                <span className='text-gray-500 text-sm'>{liked }</span>
-                                            </SwiperSlide>
+                                                <span className='text-gray-500 text-sm'>
+                                                    {likesCount} Likes
+                                                </span>                                            </SwiperSlide>
                                         ))
                                     )
                                 }
@@ -534,7 +543,9 @@ function Product() {
 
                                                                         }
                                                                     </button>
-
+                                                                    <span className="text-xs text-gray-500">
+                                                                        {com.likes_count}
+                                                                    </span>
                                                                     <Link
                                                                         onClick={() => deleteComment(com.id)}
                                                                         to="" className="w-5 h-5 flex items-center justify-center group">
