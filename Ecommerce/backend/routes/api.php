@@ -41,6 +41,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/comment/{productId}', [FrontUserController::class, 'index']);
 
 
+Route::get('/product/{id}/reviews', [FrontUserController::class, 'getReviews']);
 
 
 Route::group([
@@ -56,6 +57,10 @@ Route::group([
 
     // COMMENTlike
     Route::post('/comment/{id}/like', [FrontUserController::class, 'toggleCommentLike']);
+
+    // ratings
+    Route::post('/product/{id}/reviews', [FrontUserController::class, 'storeReviews']);
+
 
     // profile
     Route::post('/myaccount', [ProfileController::class, 'store']);

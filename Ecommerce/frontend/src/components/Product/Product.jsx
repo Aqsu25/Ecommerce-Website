@@ -17,6 +17,7 @@ import striptags from "striptags";
 import { useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ReviewSection from '../common/ReviewSection';
 
 dayjs.extend(relativeTime);
 
@@ -34,17 +35,17 @@ function Product() {
     // fetchComments from db
     const [comment, setComment] = useState([]);
     const { id } = useParams();
-    // ratings
-    const [ratings, setRatings] = useState([]);
+
+
     // LIKES
     const [likes, setLikes] = useState(() => {
         const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
-        return storedLikes[id] || false;
+        return storedLikes.hasOwnProperty(id)
+            ? storedLikes[id]
+            : false;
     });
     // like count
     const [likesCount, setLikesCount] = useState(0);
-
-
 
 
     // time
@@ -69,9 +70,6 @@ function Product() {
                 setProductImages(result.data.product_images)
 
                 setProductSizes(result.data.product_sizes)
-
-                setLikes(result.data.liked);
-                setLikesCount(result.data.likes_count);
             }
 
         } catch (error) {
@@ -110,6 +108,17 @@ function Product() {
             fetchProduct();
             fetchComment();
         }
+    }, [id]);
+
+    useEffect(() => {
+        const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
+
+        if (storedLikes[id]) {
+            setLikes(true);
+        } else {
+            setLikes(false);
+        }
+
     }, [id]);
 
     if (!product) {
@@ -202,17 +211,29 @@ function Product() {
                     "Authorization": `Bearer ${UserToken()}`
                 },
             });
+
             const result = await res.json();
+
             if (result.status === 200) {
-                toast.success(result.message);
-                setLikes(result.liked);
-                setLikesCount(result.totalLikes)
+
                 const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
-                storedLikes[id] = result.liked;
+
+                if (result.liked) {
+                    toast.success(result.message);
+
+                    setLikes(true);
+                    storedLikes[id] = true;
+
+                } else {
+                    toast.info(result.message);
+
+                    setLikes(false);
+                    delete storedLikes[id];
+                }
+
+                setLikesCount(result.totalLikes);
 
                 localStorage.setItem("productLikes", JSON.stringify(storedLikes));
-
-
             }
 
         } catch (error) {
@@ -220,6 +241,7 @@ function Product() {
             toast.error("Something Went Wrong!");
         }
     };
+
 
     // handleLikesComment
     const likeComment = async (commentId) => {
@@ -251,6 +273,7 @@ function Product() {
             toast.error("Something Went Wrong!");
         }
     };
+
     return (
         <Layout>
             <div className='container mx-auto px-2 md:px-4 py-2 mb-5'>
@@ -310,6 +333,7 @@ function Product() {
 
                                                     }
                                                 </button>
+                                                <span className='text-gray-500 text-sm'>{liked }</span>
                                             </SwiperSlide>
                                         ))
                                     )
@@ -415,7 +439,7 @@ function Product() {
                                     : "text-gray-600"
                                     }`}
                             >
-                                Reviews (10)
+                                Reviews
                             </button>
                         </li>
 
@@ -442,11 +466,9 @@ function Product() {
                                 {striptags(product?.description)}
                             </div>
                         )}
-
+                        {/* reviews */}
                         {activeTab === "reviews" && (
-                            <div>
-                                <p>Reviews section yahan show hoga.</p>
-                            </div>
+                            <ReviewSection />
                         )}
 
                         {activeTab === "comments" && (
@@ -512,6 +534,7 @@ function Product() {
 
                                                                         }
                                                                     </button>
+
                                                                     <Link
                                                                         onClick={() => deleteComment(com.id)}
                                                                         to="" className="w-5 h-5 flex items-center justify-center group">
@@ -537,7 +560,3 @@ function Product() {
         </Layout >)
 }
 export default Product
-
-
-
-

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -194,6 +195,60 @@ class UserController extends Controller
             'totalLikes' => $totalLikes,
             'message' => $message,
 
+        ], 200);
+    }
+
+    // ratingStore
+    public function storeReviews(Request $request, string $id)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'review' => 'nullable|string',
+            'rate' => 'required|integer|min:1|max:5',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()
+            ], 400);
+        }
+        $review = Review::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'product_id' => $id
+            ],
+            [
+                'review' => $request->review,
+                'rate' => $request->rate,
+            ]
+        );
+        return response()->json([
+            'status' => 200,
+            'message' => "Review Submit Successfully!",
+            'data' => $review,
+        ], 200);
+    }
+
+    // getRating
+    public function getReviews($id)
+    {
+        $reviews = Review::with('user')
+        // ->where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->where('status', 'active')
+            ->latest()
+            ->get();
+            $avgRating = $reviews->avg('rate');
+            // dd($avgRating);
+        return response()->json([
+            'status' => 200,
+            'data' =>
+            [
+                'reviews' => $reviews,
+                'avgRating' => $avgRating,
+            ]
         ], 200);
     }
 }

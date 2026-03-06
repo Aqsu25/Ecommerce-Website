@@ -69,9 +69,21 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
     // rating
-    public function ratings()
+    public function reviews()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Review::class)->where('status', 'active');
+    }
+
+    // totalRating
+    public function totalRatings()
+    {
+        return $this->reviews()->count();
+    }
+
+    // averagerating
+      public function averageRatings()
+    {
+        return $this->reviews()->avg('rate');
     }
 
     // likes
