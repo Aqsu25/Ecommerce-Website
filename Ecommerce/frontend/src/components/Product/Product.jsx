@@ -318,12 +318,9 @@ function Product() {
           </div>
           <div className="w-full md:w-3/5 rounded-2xl ms-7 px-5">
             <h1 className="text-4xl font-bold"> {product?.title}</h1>
-            <div className="flex gap-2 py-3">
-              <StarRating />
-              <span className="text-red-400">10 Reviews</span>
-            </div>
+           
             {/* price */}
-            <div className="text-2xl pb-3">
+            <div className="text-2xl pb-3 py-3">
               ${product?.price}
               <span className="text-gray-400 ps-3">
                 ${product?.compare_price}
