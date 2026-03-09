@@ -1,15 +1,13 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UserAuthContext } from '../context/UserAuth';
 
 function Sidebar() {
     const { logout } = useContext(UserAuthContext);
+
     const sideBarLinks = [
         { name: "My Account", path: "/myaccount" },
-        { name: "Products", path: "" },
-        { name: "Orders", path: "/myorder" },
-      
-
+        { name: "Order", path: "/myorder" },
     ]
     return (
         <div className='shadow-lg p-4 rounded-lg border-2 border-gray-200'>

@@ -32,6 +32,7 @@ import CreateSize from "./components/Admin/Sizes/CreateSize";
 import ShowSize from "./components/Admin/Sizes/ShowSize";
 import EditSize from "./components/Admin/Sizes/EditSize";
 import ShowUser from "./components/Admin/User/ShowUser";
+import UserProduct from "./components/User/UserProduct";
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
               </Userrequireauth>
             }
           />
+        
           {/* user order */}
           <Route
             path="/myorder"

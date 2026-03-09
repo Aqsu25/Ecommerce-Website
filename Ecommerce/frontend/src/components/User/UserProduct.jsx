@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../common/Layout'
 import Sidebar from './Sidebar'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Empty from '../common/Empty';
 import Loader from '../common/Loader';
 import { apiUrl, UserToken } from '../common/Http';
 
-function UserOrder() {
-    const [order, setOrder] = useState([])
+function UserProduct() {
+    const [product, setProduct] = useState([])
     const [loader, setLoader] = useState(false)
-    const { id } = useParams();
-    const fetchorder = async () => {
+    const fetchProduct = async () => {
         setLoader(true)
-        const res = await fetch(`${apiUrl}/order`, {
+        const res = await fetch(`${apiUrl}/purchaseproduct`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -29,9 +28,7 @@ function UserOrder() {
         console.log("Token-Show:", UserToken());
         if (result.status == 200) {
 
-            setOrder(result.data)
-
-            console.log("User", result.data);
+            setProduct(result.data)
 
         } else {
             console.log("Something went wrong!")
@@ -40,39 +37,32 @@ function UserOrder() {
     }
 
     useEffect(() => {
-        fetchorder();
+        fetchProduct();
     }, [])
+
     return (
         <div >
             <Layout>
                 <div className='md:container md:mx-auto px-6 py-5 my-5'>
-                    <div className="mb-6">
-                        <h5 className="text-sm md:text-2xl font-bold text-gray-800">
-                            My Order
-                        </h5>
-                        <p className="text-gray-500 text-sm mt-1">
-                           Check the status of your recent purchases.
-                        </p>
-                    </div>
-
+                    <h2 className='my-2 text-base md:text-2xl'>Purchase-Product</h2>
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="w-full md:w-1/4">
                             <Sidebar />
                         </div>
                         <div className="w-full md:w-3/4">
-                            <div className="shadow-lg border-2 border-gray-200 p-4 rounded-lg">
+                            <div className="shadow-lg bproduct-2 bproduct-gray-200 p-4 rounded-lg">
                                 <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base">
                                     {
                                         loader == true && <Loader />
                                     }
                                     {
-                                        !loader && !order && <Empty text="Order Not Found!" />}
+                                        !loader && !product && <Empty text="product Not Found!" />}
                                     {
-                                        order && order.length > 0 &&
+                                        product && product.length > 0 &&
                                         <div>
 
                                             <table className="w-full text-sm text-left rtl:text-right text-body">
-                                                <thead className="bg-neutral-secondary-soft border-b border-gray-300">
+                                                <thead className="bg-neutral-secondary-soft bproduct-b bproduct-gray-300">
                                                     <tr
                                                         className="odd:bg-neutral-primary even:bg-neutral-secondary-soft hover:bg-gray-100 transition"
                                                     >
@@ -86,10 +76,7 @@ function UserOrder() {
                                                             Email
                                                         </th>
                                                         <th scope="col" className="px-6 py-3 font-medium text-center">
-                                                            Item
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-3 font-medium text-center">
-                                                            Total
+                                                            Amount
                                                         </th>
                                                         <th scope="col" className="px-6 py-3 font-medium text-center">
                                                             Date
@@ -100,78 +87,58 @@ function UserOrder() {
                                                         <th scope="col" className="px-6 py-3 font-medium text-center">
                                                             Status
                                                         </th>
-                                                        <th scope="col" className="px-6 py-3 font-medium text-center">
-                                                            Order-Confirmation
-                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        order.map((order, index) => (
+                                                        product.map((product, index) => (
 
                                                             <tr
                                                                 key={index}
                                                                 className="odd:bg-neutral-primary even:bg-neutral-secondary-soft hover:bg-gray-100  transition"
                                                             >
                                                                 <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                                                                    <Link to={`/myorder/${order.id}`}
+                                                                    <Link to={`/myproduct/${product.id}`}
                                                                     >
-                                                                        {order.id}
+                                                                        {product.id}
                                                                     </Link>
                                                                 </th>
                                                                 <td className="px-6 py-4">
-                                                                    {order.user?.name}
+                                                                    {product.user?.name}
                                                                 </td>
                                                                 <td className="px-6 py-4">
-                                                                    {order.user?.email}
-                                                                </td>
-
-                                                                <td className="px-6 py-4">
-
-                                                                    <img src={order?.items?.[0]?.product?.image_url} width={50} alt="Product" />
-                                                                </td>
-
-                                                                <td className="px-6 py-4">
-                                                                    RS {order.grand_total}
+                                                                    {product.user?.email}
                                                                 </td>
                                                                 <td className="px-6 py-4">
-                                                                    {new Date(order.created_at).toISOString().split("T")[0]}
+                                                                    RS {product.grand_total}
                                                                 </td>
                                                                 <td className="px-6 py-4">
-                                                                    {order.payment_status == 'paid' ?
+                                                                    {new Date(product.created_at).toISOString().split("T")[0]}
+                                                                </td>
+                                                                <td className="px-6 py-4">
+                                                                    {product.payment_status == 'paid' ?
                                                                         <span className='text-white bg-green-700 hover:bg-green-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>Paid</span>
                                                                         :
                                                                         <span className='text-white bg-red-500 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>UnPaid</span>
                                                                     }
                                                                 </td>
                                                                 <td className="px-6 py-4">
-                                                                    {order.status == 'pending'
+                                                                    {product.status == 'pending'
                                                                         &&
                                                                         <span className='text-white bg-yellow-400 hover:bg-yellow-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>Pending</span>
                                                                     }
-                                                                    {order.status == 'delivered'
+                                                                    {product.status == 'delivered'
                                                                         &&
                                                                         <span className='text-white bg-green-700 hover:bg-green-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>Delivered</span>
                                                                     }
-                                                                    {order.status == 'shipped'
+                                                                    {product.status == 'shipped'
                                                                         &&
                                                                         <span className='text-white bg-red-700 hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>Shipped</span>
                                                                     }
-                                                                    {order.status == 'cancelled'
+                                                                    {product.status == 'cancelled'
                                                                         &&
                                                                         <span className='text-white bg-gray-700 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-full text-sm px-4 py-2 text-center leading-5'>Cancelled</span>
                                                                     }
-                                                                </td>
-                                                                <td className="px-6 py-4">
-                                                                    <span className='text-red-500 text-sm'>
-
-                                                                        <Link 
-                                                                        className='text-sm'
-                                                                        to={`/order/confirmation/${order.id}`}>
-                                                                            Confirm Order
-                                                                        </Link>
-
-                                                                    </span>
                                                                 </td>
                                                             </tr>
                                                         ))
@@ -192,4 +159,4 @@ function UserOrder() {
     )
 }
 
-export default UserOrder
+export default UserProduct

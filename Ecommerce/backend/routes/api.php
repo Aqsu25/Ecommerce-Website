@@ -31,7 +31,6 @@ Route::get('/getBrands', [ProducController::class, 'getBrands']);
 // getproducts
 Route::get('/getProducts', [ProducController::class, 'getProducts']);
 // getproductsingle
-Route::get('/getProduct/{id}', [ProducController::class, 'getProduct']);
 // register
 Route::post('/register', [RegisteredUserController::class, 'store']);
 // login
@@ -40,6 +39,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 // comment
 Route::get('/comment/{productId}', [FrontUserController::class, 'index']);
 
+Route::get('/getProduct/{id}', [ProducController::class, 'getProduct']);
 
 Route::get('/product/{id}/reviews', [FrontUserController::class, 'getReviews']);
 
@@ -50,6 +50,11 @@ Route::group([
         'checkUserRole'
     ]
 ], function () {
+
+    // product purchase
+    Route::get('/purchaseproduct', [ProducController::class, 'index']);
+
+
 
     Route::resource('/order', OrderController::class);
     // productlike

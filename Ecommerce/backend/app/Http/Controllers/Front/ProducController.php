@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\Environment\Console;
 
 class ProducController extends Controller
 {
@@ -16,7 +17,14 @@ class ProducController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::with('user')->get();
+        // with('user')->where('user_id', Auth::id())->get();
+        dd($product);
+
+        return response()->json([
+            'status' => 200,
+            'data' => $product,
+        ]);
     }
 
     /**
@@ -136,10 +144,18 @@ class ProducController extends Controller
     // SINGLEPRODUCT
     public function getProduct($id)
     {
-        $product = Product::with(['product_images', 'product_sizes'])->withCount('likes')->findOrFail($id);
+        $product = Product::with(['product_images', 'product_sizes', 'user'])
+            ->withCount('likes')
+            ->findOrFail($id);
+
+        $user = auth('sanctum')->user();
+
         $liked = false;
-        if (auth()->check()) {
-            $liked = $product->likes()->where('user_id', auth()->id())->exists();
+
+        if ($user) {
+            $liked = $product->likes()
+                ->where('user_id', $user->id)
+                ->exists();
         }
 
         return response()->json([
@@ -149,6 +165,4 @@ class ProducController extends Controller
             'likes_count' => $product->likes_count,
         ]);
     }
-    // users
-
 }

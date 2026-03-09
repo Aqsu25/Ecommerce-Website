@@ -135,7 +135,7 @@ class UserController extends Controller
 
         if ($like) {
             $like->delete();
-            $liked = 'false';
+            $liked = false;
             $message = "UnLike Successfully!";
         } else {
             Like::create([
@@ -143,7 +143,7 @@ class UserController extends Controller
                 'likeable_id' => $product->id,
                 'likeable_type' => Product::class,
             ]);
-            $liked = 'true';
+            $liked = true;
             $message = "Like Successfully!";
         }
         // total likes
@@ -174,7 +174,7 @@ class UserController extends Controller
 
         if ($like) {
             $like->delete();
-            $liked = 'false';
+            $liked = false;
             $message = "UnLike Successfully!";
         } else {
             Like::create([
@@ -182,7 +182,7 @@ class UserController extends Controller
                 'likeable_id' => $comment->id,
                 'likeable_type' => Comment::class,
             ]);
-            $liked = 'true';
+            $liked = true;
             $message = "Like Successfully!";
         }
         // total likes
@@ -235,13 +235,13 @@ class UserController extends Controller
     public function getReviews($id)
     {
         $reviews = Review::with('user')
-        // ->where('user_id', auth()->id())
+            // ->where('user_id', auth()->id())
             ->where('product_id', $id)
             ->where('status', 'active')
             ->latest()
             ->get();
-            $avgRating = $reviews->avg('rate');
-            // dd($avgRating);
+        $avgRating = $reviews->avg('rate');
+        // dd($avgRating);
         return response()->json([
             'status' => 200,
             'data' =>
@@ -251,5 +251,7 @@ class UserController extends Controller
             ]
         ], 200);
     }
+
+    // 
 }
 // 

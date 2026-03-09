@@ -56,6 +56,7 @@ function Product() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: `Bearer ${UserToken()}`,
         },
       });
       const result = await res.json();
@@ -67,6 +68,9 @@ function Product() {
         setProductSizes(result.data.product_sizes);
 
         setLikes(result.liked);
+
+        console.log("Product-like", result.liked)
+        console.log("Product-totalCount", result.likes_count)
 
         setLikesCount(result.likes_count);
       }
@@ -104,15 +108,7 @@ function Product() {
       fetchComment();
     }
   }, [id]);
-  useEffect(() => {
-    const storedLikes = JSON.parse(localStorage.getItem("productLikes")) || {};
 
-    if (storedLikes[id]) {
-      setLikes(true);
-    } else {
-      setLikes(false);
-    }
-  }, [id]);
 
   if (!product) {
     return (
@@ -201,8 +197,11 @@ function Product() {
       const result = await res.json();
 
       if (result.status === 200) {
+        console.log("like", result.liked)
         setLikes(result.liked);
         setLikesCount(result.totalLikes);
+        console.log("total-like", result.totalLikes)
+        toast.success(result.message);
       }
     } catch (error) {
       console.error(error);
@@ -228,10 +227,10 @@ function Product() {
           prev.map((c) =>
             c.id === commentId
               ? {
-                  ...c,
-                  likes_count: result.totalLikes,
-                  liked: result.liked,
-                }
+                ...c,
+                likes_count: result.totalLikes,
+                liked: result.liked,
+              }
               : c,
           ),
         );
@@ -252,12 +251,6 @@ function Product() {
             <li className="flex items-center text-sm text-slate-500 hover:text-[#007595]">
               <Link to="/" className="text-black hover:text-[#007595]">
                 Home
-              </Link>
-              <span className="pointer-events-none mx-2 text-black">/</span>
-            </li>
-            <li className="flex items-center text-sm text-slate-500 hover:text-[#007595]">
-              <Link to="/shop" className="text-black hover:text-[#007595]">
-                Shop
               </Link>
               <span className="pointer-events-none mx-2 text-black">/</span>
             </li>
@@ -291,7 +284,7 @@ function Product() {
                       >
                         <FontAwesomeIcon
                           icon={faHeart}
-                          className={likes ? "text-red-500" : "text-white"}
+                          className={likes ? "text-red-500" : "text-gray-200"}
                           size="2x"
                         />
                       </button>
@@ -383,11 +376,10 @@ function Product() {
             <li className="-mb-px mr-1">
               <button
                 onClick={() => setActiveTab("description")}
-                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${
-                  activeTab === "description"
-                    ? "border-b-2 border-[#007595] text-[#007595]"
-                    : "text-gray-600"
-                }`}
+                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${activeTab === "description"
+                  ? "border-b-2 border-[#007595] text-[#007595]"
+                  : "text-gray-600"
+                  }`}
               >
                 Description
               </button>
@@ -396,11 +388,10 @@ function Product() {
             <li className="mr-1">
               <button
                 onClick={() => setActiveTab("reviews")}
-                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${
-                  activeTab === "reviews"
-                    ? "border-b-2 border-[#007595] text-[#007595]"
-                    : "text-gray-600"
-                }`}
+                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${activeTab === "reviews"
+                  ? "border-b-2 border-[#007595] text-[#007595]"
+                  : "text-gray-600"
+                  }`}
               >
                 Reviews
               </button>
@@ -410,11 +401,10 @@ function Product() {
             <li className="mr-1">
               <button
                 onClick={() => setActiveTab("comments")}
-                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${
-                  activeTab === "comments"
-                    ? "border-b-2 border-[#007595] text-[#007595]"
-                    : "text-gray-600"
-                }`}
+                className={`inline-block py-2 px-4 font-semibold cursor-pointer ${activeTab === "comments"
+                  ? "border-b-2 border-[#007595] text-[#007595]"
+                  : "text-gray-600"
+                  }`}
               >
                 Comments {comment.length}
               </button>

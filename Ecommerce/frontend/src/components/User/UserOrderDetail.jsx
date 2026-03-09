@@ -72,7 +72,19 @@ function UserOrderDetail() {
         <div >
             <Layout>
                 <div className='md:container md:mx-auto px-6 py-5 my-5'>
-                    <h2 className='my-2 text-base md:text-2xl'>User Dashboard</h2>
+
+                    <div className="mb-6">
+                        <div className="mb-6">
+                            <h5 className="text-sm md:text-2xl font-bold text-gray-800">
+                                Order-Detail
+                            </h5>
+                            <p className="text-gray-500 text-sm mt-1">
+                                Check the order detail of your recent purchases.
+                            </p>
+                        </div>
+
+                    </div>
+
                     <div className="flex flex-col md:flex-row gap-3">
                         <div className="w-full md:w-1/4">
                             <Sidebar />

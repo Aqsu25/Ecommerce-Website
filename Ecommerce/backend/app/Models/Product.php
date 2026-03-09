@@ -22,6 +22,13 @@ class Product extends Model
         'user_id',
         'is_Featured',
     ];
+
+    // user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected $appends = ['image_url'];
 
     public function product_images()
