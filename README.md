@@ -19,5 +19,5 @@ Beautiful UI. Clean code. Simple experience.
 | Frontend     | React (with Hooks & Context API)       |
 | Backend      | Laravel (REST API)                     |
 | Database     | MySQL                                  |
-| Authentication | JWT / Laravel Sanctum                |
-| Styling      | CSS / Tailwind / Styled‑Components     |
+| Authentication | Laravel Sanctum                |
+| Styling      | Tailwind / Styled‑Components     |
