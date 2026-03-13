@@ -32,12 +32,14 @@ import CreateSize from "./components/Admin/Sizes/CreateSize";
 import ShowSize from "./components/Admin/Sizes/ShowSize";
 import EditSize from "./components/Admin/Sizes/EditSize";
 import ShowUser from "./components/Admin/User/ShowUser";
+import AIChat from "./chatbot/AIChat";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/ai-chat" element={<AIChat />} />
           {/* user routes */}
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
@@ -83,7 +85,7 @@ function App() {
               </Userrequireauth>
             }
           />
-        
+
           {/* user order */}
           <Route
             path="/myorder"

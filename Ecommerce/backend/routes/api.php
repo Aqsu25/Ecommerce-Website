@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\ShippingChargeController;
 use App\Http\Controllers\admin\SizeController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\AIController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -18,6 +19,8 @@ use App\Http\Controllers\front\UserController as FrontUserController;
 use App\Http\Controllers\TempController;
 use Illuminate\Support\Facades\Route;
 
+// chatbot
+Route::post('/ai/chat', [AIController::class, 'chat']);
 
 // latest
 Route::get('/latestProduct', [ProducController::class, 'latestProduct']);
